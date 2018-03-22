@@ -5,7 +5,7 @@ call print
 
 jmp .
 
-msg: .ascii "AAAA\0"
+msg: .ascii "AAA\0"
 
-.section .data
+.section .boot_signature, "a"
   .word 0xaa55

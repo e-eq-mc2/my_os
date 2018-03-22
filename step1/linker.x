@@ -6,7 +6,7 @@ SECTIONS
 
   . = 0x7DFE;
   .boot_signature : {
-    KEEP(*(.data))
+    KEEP(*(.boot_signature))
   }
 }
 

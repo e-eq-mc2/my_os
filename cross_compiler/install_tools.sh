@@ -1,4 +1,7 @@
 #!/bin/sh
+# Referenced:
+# http://preshing.com/20141119/how-to-build-a-gcc-cross-compiler/
+
 set -x
 
 export CC=/usr/local/bin/gcc-7

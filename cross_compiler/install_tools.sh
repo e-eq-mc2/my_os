@@ -28,8 +28,8 @@ install_tools() {
   GRUB_CONFIGURE_OPTIONS="BUILD_CC=/usr/local/bin/gcc-7 --disable-werror --disable-nls TARGET_CC=$TARGET-gcc TARGET_CC_FLAGS="-B $PREFIX/" TARGET_OBJCOPY=$TARGET-objcopy TARGET_STRIP=$TARGET-strip TARGET_NM=$TARGET-nm TARGET_RANLIB=$TARGET-ranlib"
 
   # Step 1. Binutils
-  if false; then
-    #curl -O http://ftp.gnu.org/gnu/binutils/$BINUTILS.tar.gz
+  if true; then
+    curl -O http://ftp.gnu.org/gnu/binutils/$BINUTILS.tar.gz
     tar xf $BINUTILS.tar.gz
 
     tmpdir=tmp-$BINUTILS
@@ -44,8 +44,8 @@ install_tools() {
   fi
 
   # Step 2. iconv
-  if false; then
-    #curl -O https://ftp.gnu.org/pub/gnu/libiconv/$ICONV.tar.gz
+  if true; then
+    curl -O https://ftp.gnu.org/pub/gnu/libiconv/$ICONV.tar.gz
     tar xf $ICONV.tar.gz
 
     tmpdir=tmp-$ICONV
@@ -60,8 +60,8 @@ install_tools() {
   fi
 
   # Step 3. GCC
-  if false; then
-    #curl -O https://ftp.gnu.org/gnu/gcc/$GCC/$GCC.tar.gz
+  if true; then
+    curl -O https://ftp.gnu.org/gnu/gcc/$GCC/$GCC.tar.gz
     tar xf $GCC.tar.gz
 
     tmpdir=tmp-$GCC
@@ -78,7 +78,7 @@ install_tools() {
 
   # Step 4. GRUB
   if true; then
-    #git clone --depth 1 git://git.savannah.gnu.org/grub.git
+    git clone --depth 1 git://git.savannah.gnu.org/grub.git
 
     export PATH=$BINUTILS_PREFIX/bin:$PATH
 

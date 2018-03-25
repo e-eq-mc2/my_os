@@ -15,7 +15,7 @@ call print_hex
 
 jmp .
 
-msg: .ascii "Hello world!\r\n\0"
+msg: .ascii "Hello World\r\n\0"
 
 .section .boot_signature, "a"
   .word 0xaa55

@@ -1,7 +1,7 @@
 .code16
 
 mov $0x0e, %ah
-mov $0x41, %al
+mov $'A', %al
 int $0x10
 
 jmp .

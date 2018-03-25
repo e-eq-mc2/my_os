@@ -1,6 +1,6 @@
-#!/bin/sh -x
+#!/bin/sh
+set -x
 
-# 環境変数の設定
 export CC=/usr/local/bin/gcc-7
 export CXX=/usr/local/bin/g++-7
 export LD=/usr/local/bin/gcc-7
@@ -28,8 +28,8 @@ install_tools() {
   GRUB_CONFIGURE_OPTIONS="BUILD_CC=/usr/local/bin/gcc-7 --disable-werror --disable-nls TARGET_CC=$TARGET-gcc TARGET_CC_FLAGS="-B $PREFIX/" TARGET_OBJCOPY=$TARGET-objcopy TARGET_STRIP=$TARGET-strip TARGET_NM=$TARGET-nm TARGET_RANLIB=$TARGET-ranlib"
 
   # Step 1. Binutils
-  if true; then
-    curl -O http://ftp.gnu.org/gnu/binutils/$BINUTILS.tar.gz
+  if false; then
+    #curl -O http://ftp.gnu.org/gnu/binutils/$BINUTILS.tar.gz
     tar xf $BINUTILS.tar.gz
 
     tmpdir=tmp-$BINUTILS
@@ -44,23 +44,24 @@ install_tools() {
   fi
 
   # Step 2. iconv
-  if true; then
-    curl -O https://ftp.gnu.org/pub/gnu/libiconv/$ICONV.tar.gz
+  if false; then
+    #curl -O https://ftp.gnu.org/pub/gnu/libiconv/$ICONV.tar.gz
     tar xf $ICONV.tar.gz
 
     tmpdir=tmp-$ICONV
     rm -rf $tmpdir
-    mkdir -p $tmpdir cd $tmpdir
+    mkdir -p $tmpdir 
+    cd $tmpdir
 
-    ../$ICONV/configure -prefix=$PREFIX
+    ../$ICONV/configure -prefix=$ICONV_PREFIX
     make $MAKE_OPTIONS
     make install
     cd ..
   fi
 
   # Step 3. GCC
-  if true; then
-    curl -O https://ftp.gnu.org/gnu/gcc/$GCC/$GCC.tar.gz
+  if false; then
+    #curl -O https://ftp.gnu.org/gnu/gcc/$GCC/$GCC.tar.gz
     tar xf $GCC.tar.gz
 
     tmpdir=tmp-$GCC
@@ -77,9 +78,9 @@ install_tools() {
 
   # Step 4. GRUB
   if true; then
-    export PATH="$GCC_PREFIX/bin:$PATH:$BINUTILS_PREFIX/$TARGET/bin:$PATH"
-    git clone --depth 1 git://git.savannah.gnu.org/grub.git
-    PATH="$GCC_PREFIX/bin:$BINUTILS_PREFIX/bin:$BINUTILS_PREFIX/$TARGET/bin:$PATH"
+    #git clone --depth 1 git://git.savannah.gnu.org/grub.git
+
+    export PATH=$BINUTILS_PREFIX/bin:$PATH
 
     export TARGET_CC=$GCC_PREFIX/bin/i386-elf-gcc
     export TARGET_OBJCOPY=$BINUTILS_PREFIX/bin/i386-elf-objcopy
@@ -87,6 +88,7 @@ install_tools() {
     export TARGET_NM=$BINUTILS_PREFIX/bin/i386-elf-nm
     export TARGET_RANLIB=$BINUTILS_PREFIX/bin/i386-elf-ranlib
     export TARGET_CCAS=$BINUTILS_PREFIX/bin/i386-elf-as
+    ln $BINUTILS_PREFIX/$TARGET/bin/as $GCC_PREFIX/libexec/gcc/$TARGET/$(echo $GCC | cut -d'-' -f 2)/
 
     cd grub
     sh autogen.sh
@@ -98,19 +100,18 @@ install_tools() {
     cd $tmpdir
 
     ../$GRUB/configure --prefix=$GRUB_PREFIX --target=$TARGET $GRUB_CONFIGURE_OPTIONS
-    make $MAKE_OPTIONS
+    make
     make install
     cd ..
   fi
 }
 
-
 #/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
-brew install gmp
-brew install mpfr
-brew install libmpc
-brew install gcc
+#brew install gmp
+#brew install mpfr
+#brew install libmpc
+#brew install gcc
 
 install_tools i386-elf
 #install_tools i686-elf

@@ -2,7 +2,7 @@
 
 start:
 mov $stack_base, %bp
-mov %sp, %bp
+mov %bp, %sp
 
 push $msg 
 call print_str

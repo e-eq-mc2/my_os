@@ -1,3 +1,5 @@
+.code16
+#### GDT ####
 .section .gdt, "a"
 .align 8
 gdt_start:
@@ -26,3 +28,31 @@ gdt_end:
 gdt_descriptor:
 .word (gdt_end - gdt_start)
 .int gdt_start
+
+.set CODE_SEGMENT_OFFSET, segment_descriptor_code - gdt_start
+.set DATA_SEGMENT_OFFSET, segment_descriptor_data - gdt_start
+#### ### ####
+
+.global setup_gdt
+setup_gdt:
+
+lgdtl (gdt_descriptor)
+
+movl %cr0,%eax
+orl  $0x1,%eax
+movl %eax,%cr0
+
+jmp flash_pipeline
+flash_pipeline:
+mov $DATA_SEGMENT_OFFSET, %ax
+mov %ax, %ds
+mov %ax, %es
+mov %ax, %fs
+mov %ax, %gs
+mov %ax, %ss
+
+ljmp $CODE_SEGMENT_OFFSET, $start_32bit
+
+start_32bit:
+
+ret

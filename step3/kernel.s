@@ -1,27 +1,13 @@
-.code16
+.code16 
 start:
 cli # Clear Interrupt Flag
 
-lgdtl (gdt_descriptor)
+mov $stack_base, %bp
+mov %bp, %sp
 
-movl %cr0,%eax
-orl  $0x01,%eax
-movl %eax,%cr0
-jmp  flash_pipeline
-
-flash_pipeline:
-movw $16, %ax
-movw %ax, %ds
-movw %ax, %es
-movw %ax, %fs
-movw %ax, %gs
-movw %ax, %ss
-
-ljmp $8, $start_32bit
+call setup_gdt
 
 .code32
-start_32bit:
-
 mov $0xB8000, %ebx
 mov $64, %ecx
 

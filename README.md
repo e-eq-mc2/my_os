@@ -18,15 +18,19 @@ Refer the script below which is supposed to run on macOS Sierra.
 
 Progress
 --------
-- Step 0
-![](img/step0.png?raw=true)
+- 16bit Real Mode
+  - Step 0
+  ![](img/step0.png?raw=true)
+  
+  - Step 1
+  ![](img/step1.png?raw=true)
+  
+  - Step 2
+  ![](img/step2.png?raw=true)
 
-- Step 1
-![](img/step1.png?raw=true)
-
-- Step 2
-![](img/step2.png?raw=true)
-
+- 32bit Protected Virtual Address Mode
+  - Step 3
+  ![](img/step3.png?raw=true)
 
 References
 --------

@@ -42,8 +42,8 @@ movl %cr0,%eax
 orl  $0x1,%eax
 movl %eax,%cr0
 
-jmp flash_pipeline
-flash_pipeline:
+#jmp flash_pipeline
+#flash_pipeline:
 mov $DATA_SEGMENT_OFFSET, %ax
 mov %ax, %ds
 mov %ax, %es
@@ -52,7 +52,6 @@ mov %ax, %gs
 mov %ax, %ss
 
 ljmp $CODE_SEGMENT_OFFSET, $start_32bit
-
 start_32bit:
 
 ret

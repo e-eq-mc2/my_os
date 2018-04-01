@@ -8,24 +8,25 @@ mov %esp, %ebp
 push %edi
 push %edx
 push %eax
-push %ecx
 
 mov  8(%ebp), %edx
 
 loop_begin:
 
-# Check /0
+movl $0x0, (is_printable)
+# Check \0
 cmpb $0x0, (%edx)
 je loop_end
 
-# Check /r
+# Check \r
 cmpb $'\r', (%edx)
 je carriage_return
 
-# Check /n
+# Check \n
 cmpb $'\n', (%edx)
 je line_feed
 
+movl $0x1, (is_printable)
 jmp check_overrun
 
 #####
@@ -56,30 +57,25 @@ movl $0x0, (cursor_position_y)
 
 ####
 print_char:
-#mov (cursor_position_y), %eax
-#mov $80, %ecx
-#mulw %cx
+cmp $0x0, (is_printable)
+je next_char
 
-mov $0, %eax
-add (cursor_position_x), %eax
-
-#mov $2, %ecx
-#mulw %cx
-shl %eax
-
-mov %eax, %edi 
+mov (cursor_position_y), %edi
+imul $80, %edi
+add (cursor_position_x), %edi
+shl $0x1, %edi
 
 movb (%edx), %al
 movb $0x04, %ah
 movw %ax, 0xb8000(%edi)
 
-inc %edx
 incl (cursor_position_x)
+next_char:
+inc %edx
 
 jmp loop_begin
 loop_end:
 
-pop %ecx
 pop %eax
 pop %edx
 pop %edi
@@ -90,3 +86,4 @@ ret
 
 cursor_position_x: .int 0x0
 cursor_position_y: .int 0x0
+is_printable: .int 0x0

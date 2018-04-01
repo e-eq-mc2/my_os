@@ -10,7 +10,7 @@ RFLAGS=#-nographic
 LDSCRIPT=linker.x
 
 TARGET=kernel.img
-OBJS=kernel.o gdt.o print_str.o #print_hex.o
+OBJS=kernel.o gdt.o print_str.o print_hex.o
 
 .PHONY: clean
 

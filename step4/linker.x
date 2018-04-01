@@ -2,8 +2,8 @@ SECTIONS
 {
   . = 0x7C00;
   .text : { kernel.o(.text) }
-  /*.text : { print_str.o(.text) }*/
-  /*.text : { print_hex.o(.text) }*/
+  .text : { print_str.o(.text) }
+  .text : { print_hex.o(.text) }
 
   .gdt : { gdt.o(.gdt) }
 

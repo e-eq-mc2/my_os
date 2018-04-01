@@ -11,6 +11,7 @@ call setup_gdt
 push $0xB8000
 push $msg
 call print_str
+add $8, %esp
 
 jmp .
 

@@ -9,9 +9,11 @@ call print_str
 
 push $(start + 1024)
 call print_hex
+add $2, %esp
 
 push $stack_base
 call print_hex
+add $2, %esp
 
 jmp .
 

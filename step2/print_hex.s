@@ -12,6 +12,7 @@ push %si
 
 push $hex_prefix
 call print_str
+add $2, %esp
 
 mov $4, %cx
 loop_begin:
@@ -34,6 +35,7 @@ loop loop_begin
 
 push $hex_postfix
 call print_str
+add $2, %esp
 
 pop %si
 pop %cx
